@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Bitcoin Wallet Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Private Wallet Manager" name="description" />
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+    <style>#waiting {display:none;}</style>
+    <script>
+    </script>
+</head>
+<body class="enlarge-menu">
+
+<!-- Top Bar Start -->
+<div class="topbar">
+
+    <!-- LOGO -->
+    <div class="topbar-left">
+        <a href="/" class="logo text-secondary font-1">
+            <i class="mdi mdi-bitcoin" style="font-size: 40px;"></i>
+        </a>
+    </div>
+    <!--end logo-->
+    <!-- Navbar -->
+    <nav class="navbar-custom">
+        <ul class="list-unstyled topbar-nav float-right mb-0">
+            <li class="hidden-sm">
+                <div class="crypto-balance">
+                    <i class="dripicons-wallet text-muted align-self-center"></i>
+                    <div class="btc-balance">
+                        <h5 class="m-0"><%= balance %> <span>BTC</span></h5>
+                        <span class="text-muted">Total Balance</span>
+                    </div>
+                </div>
+            </li>
+        </ul><!--end topbar-nav-->
+    </nav>
+    <!-- end navbar-->
+</div>
+<!-- Top Bar End -->
+
+<div class="page-wrapper">
+    <!-- Page Content-->
+    <div class="page-content">
+
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="float-right">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Manage Wallet</a></li>
+                                <li class="breadcrumb-item active">Wallet</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Wallet</h4>
+                    </div><!--end page-title-box-->
+                </div><!--end col-->
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="wallet-bal-usd">
+                                        <h4 class="wallet-title m-0">Your Total Balence</h4>
+                                        <span class="text-muted font-12"><%= date %></span>
+                                        <h3 class="text-center"><%= balance %></h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-success btn-sm btn-block px-3"
+                                                    data-toggle="modal" data-animation="bounce" data-target="#receiveAmount">
+                                                Receive</button>
+                                            <div class="modal fade" id="receiveAmount" tabindex="-1" role="dialog" aria-labelledby="receiveAmounts" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title mt-0" id="receiveAmounts">Receive Amount</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p class="text-center">New Address</p>
+                                                            <input type="text" class="form-control" value="<%= newAddress %>">
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-danger btn-sm btn-block px-3"
+                                                    data-toggle="modal" data-animation="bounce" data-target="#sendAmount">
+                                                Send</button>
+                                            <div class="modal fade" id="sendAmount" tabindex="-1" role="dialog" aria-labelledby="sendAmounts" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title mt-0" id="sendAmounts">Send Amount</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="send" action="/send" method="post">
+                                                                <div class="form-group mb-2">
+                                                                    <label for="wallet ">Wallet</label>
+                                                                    <div class="input-group">
+                                                                        <input type="text" id="wallet"
+                                                                               name="wallet" class="form-control" placeholder="3d...">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="Amount">Amount</label>
+                                                                    <div class="input-group">
+                                                                        <input type="text" id="amount"
+                                                                               name="amount" class="form-control" placeholder="000001">
+                                                                        <span class="input-group-append">
+                                                                            <button type="submit" class="btn btn-success">Send Amount</button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                            <div id="waiting">Please Wait...</div>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end card-body-->
+                        <div class="card-body pt-0">
+                            <ul class="list-group wallet-bal-crypto">
+                                <li class="list-group-item align-items-center d-flex justify-content-between">
+                                    Unconfirmed Balance: <%= info.unconfirmed_balance %>
+                                </li>
+                                <li class="list-group-item align-items-center d-flex justify-content-between">
+                                    Immature Balance: <%= info.immature_balance %>
+                                </li>
+                                <li class="list-group-item align-items-center d-flex justify-content-between">
+                                    Transaction: <%= info.txcount %>
+                                </li>
+                                <li class="list-group-item align-items-center d-flex justify-content-between">
+                                    Pay Tx Fee: <%= info.paytxfee %>
+                                </li>
+                                <li class="list-group-item align-items-center d-flex justify-content-between">
+                                    Private Key: <%= info.private_keys_enabled %>
+                                </li>
+                            </ul>
+                        </div><!--end card-body-->
+                    </div><!--end card-->
+                </div><!--end col-->
+
+                <div class="col-lg-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mt-0 mb-3">Transaction History</h4>
+                            <div class="table-responsive dash-social">
+                                <table id="datatable" class="table table-bordered">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Label</th>
+                                        <th>Confirmations</th>
+                                        <th>Transaction ID</th>
+                                        <th>Type</th>
+                                        <th>Time</th>
+                                    </tr><!--end tr-->
+                                    </thead>
+                                    <tbody>
+                                    <% transactions.forEach(function(item){ %>
+                                        <tr>
+                                            <td><%= item.amount %></td>
+                                            <td>
+                                                <%= item.label %>
+                                                <%= item.comment %>
+                                            </td>
+                                            <td><%= item.confirmations %></td>
+                                            <td><a href="https://blockstream.info/<%= item.txid %>"><%= item.txid %></a></td>
+                                            <td>
+                                                <% var color = "success"; %>
+                                                <% if(item.category === "send"){ color = "danger"; } %>
+                                                <span class="badge badge-soft-<%= color %>"><%= item.category %></span>
+                                            </td>
+                                            <%
+                                                let unix_timestamp = item.time;
+                                                var a = new Date(unix_timestamp * 1000);
+                                                var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                                                var year = a.getFullYear();
+                                                var month = months[a.getMonth()];
+                                                var date = a.getDate();
+                                                var hour = a.getHours();
+                                                var min = a.getMinutes();
+                                                var sec = a.getSeconds();
+                                                var timeConverter = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+                                            %>
+                                            <td><%= timeConverter %></td>
+                                        </tr>
+                                    <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><!--end card-body-->
+                    </div><!--end card-->
+                </div><!--end col-->
+            </div><!-- End row -->
+
+        </div><!-- container -->
+
+        <footer class="footer text-center text-sm-left">
+            &copy; 2020 Manage Wallet
+        </footer><!--end footer-->
+    </div>
+    <!-- end page content -->
+</div>
+<!-- end page-wrapper -->
+
+<!-- Scripts  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/waves.min.js"></script>
+<script src="assets/js/jquery.slimscroll.min.js"></script>
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+    $('#datatable').DataTable();
+
+    $('#send').submit(function(e){
+        e.preventDefault();
+
+        var wallet = $('#wallet').val();
+        var amount = $('#amount').val();
+
+        if(wallet === "" || amount === "")
+            return;
+
+        $.ajax({
+            url: "./send",
+            dataType: 'json',
+            method: "POST",
+            async: true,
+            data: {
+                wallet: wallet,
+                amount: amount
+            },
+            beforeSend:function(){
+                $('#waiting').show();
+            },
+            success:function(json){
+                $('#waiting').hide();
+                if(json.status === true){
+                    alert('Your Amount Was sended.');
+                    location.reload();
+                }
+                else {
+                    alert('ERROR: ' +json.status.code + ' / '+ json.status.errno);
+                }
+            },
+        })
+    })
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
