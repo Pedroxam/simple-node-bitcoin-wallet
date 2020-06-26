@@ -3,7 +3,7 @@ Simple Nodejs App to manage your bitcoin wallet
 
 A light and simple app for managing your Bitcoin wallet.
 
-After starting bitcoin full node, type <code>node index.js</code> to start app.
+After starting bitcoin full node, install all nodejs modules with <code>npm install </code> then type <code>node index.js</code> to start app.
 
 navigate to app by typing:
 
